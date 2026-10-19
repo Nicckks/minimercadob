@@ -10,6 +10,19 @@ def list_products(session: Session) -> list[Product]:
     return list(session.scalars(select(Product).order_by(Product.name)))
 
 
+def filter_products_by_price(
+    session: Session,
+    min_price: float | None = None,
+    max_price: float | None = None,
+) -> list[Product]:
+    query = select(Product).order_by(Product.name)
+    if min_price is not None:
+        query = query.where(Product.price >= min_price)
+    if max_price is not None:
+        query = query.where(Product.price <= max_price)
+    return list(session.scalars(query))
+
+
 def list_orders(session: Session) -> list[Order]:
     return list(session.scalars(select(Order).order_by(Order.created_at.desc())))
 
