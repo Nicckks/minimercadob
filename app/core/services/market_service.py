@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -15,7 +17,7 @@ def list_orders(session: Session) -> list[Order]:
 def create_order(
     session: Session,
     items: list[dict[str, int]],
-    customer_name: str | None = None,
+    customer_name: tuple[str, None] = None,
 ) -> Order:
     if not items:
         raise ValueError("Pedido precisa ter pelo menos um item.")

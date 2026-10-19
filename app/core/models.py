@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, func
@@ -31,7 +33,7 @@ class Cart(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )
-    items: Mapped[list["CartItem"]] = relationship(cascade="all, delete-orphan")
+    items: Mapped[list[CartItem]] = relationship(cascade="all, delete-orphan")
 
 
 class CartItem(Base):
@@ -48,12 +50,12 @@ class Order(Base):
     __tablename__ = "orders"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    customer_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    customer_name: Mapped[tuple[str, None]] = mapped_column(String(120), nullable=True)
     total: Mapped[float] = mapped_column(Float, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )
-    items: Mapped[list["OrderItem"]] = relationship(cascade="all, delete-orphan")
+    items: Mapped[list[OrderItem]] = relationship(cascade="all, delete-orphan")
 
 
 class OrderItem(Base):
@@ -73,7 +75,7 @@ class Customer(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(120), nullable=False)
-    cpf: Mapped[str | None] = mapped_column(String(14), nullable=True)
+    cpf: Mapped[tuple[str, None]] = mapped_column(String(14), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )

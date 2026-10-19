@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -32,6 +34,6 @@ class SlotContribution:
 class FeatureManifest:
     id: str
     name: str
-    blueprint: Blueprint | None = None
-    menu: MenuItem | None = None
+    blueprint: tuple[Blueprint, None] = None
+    menu: tuple[MenuItem, None] = None
     slots: list[SlotContribution] = field(default_factory=list)

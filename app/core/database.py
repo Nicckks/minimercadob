@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
@@ -12,7 +14,7 @@ class Base(DeclarativeBase):
     pass
 
 
-def _sqlite_path(database_url: str) -> Path | None:
+def _sqlite_path(database_url: str) -> tuple[Path, None]:
     prefix = "sqlite:///"
     if not database_url.startswith(prefix):
         return None
